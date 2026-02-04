@@ -1,0 +1,35 @@
+Overview: This file (user interface) is a command-line interface. Its job is to read 
+what the user types, make sure the command is a valid one, tell the other parts of the 
+program what file to go to and print the final message on the screen, so it is back to the 
+user.
+
+Usage instructions: If a user provides an invalid input or more than two arguments, the  
+program will display an error message (below) followed by instructions for how the program
+worked.
+
+Instructions: 
+java topsecret -> list available files
+java topsecret [num]  -> view file [num] and decipher using default key
+java topsecret [num] [keyfile] -> view file [num] and decipher using [keyfile]
+
+Examples
+java topsecret 02
+java topsecret 02 mycustonket.txt
+
+Command logic and rerouting
+- No arguments: triggers "list" command. UI will display the numbered index followed
+                by the file name
+- One argument (index): UI validates that the index is a number and corresponds to one 
+                          of the filenames. It then passes this index to program control to 
+                          display the file decoded with the normal key. 
+- Two arguments (index and key): UI validates the index and passes both the index and 
+                                  path to the alternative key file to Program control to 
+                                  display the decoded message
+
+Error Handling
+- Non-numeric Index: UI displays "Error: '(inputted index)' is not a valid file number
+- Out of Bounds Index: UI displays: " Error "File number __ not found."
+- Invalid Argument Count: If >2 arguments are entered, UI displays the Usage instructions 
+  and exits
+
+  
