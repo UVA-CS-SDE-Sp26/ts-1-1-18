@@ -1,15 +1,12 @@
 public class TopSecretUI {
 
     private ProgramController controller;
-
+// this is from the member C
     public TopSecretUI(ProgramController controller) {
         this.controller = controller;
     }
 
-    /**
-     * Entry point for CLI logic.
-     * Decides which command to run based on argument count.
-     */
+    //decides what program to run based on the amoutn of arguemtns
     public void run(String[] args) {
         if (args.length == 0) {
             handleNoArgs();
@@ -23,19 +20,19 @@ public class TopSecretUI {
     }
 
     private void handleNoArgs() {
-        // TODO: request file list from ProgramControl
+        // request file list from ProgramControl -- member c
         // controller.listFiles();
     }
 
     private void handleOneArg(String index) {
-        // TODO: validate index
-        // TODO: request file using default cipher
-        // controller.displayFile(parsedIndex, null);
+        //  validate index -- make sure index is a valid file associated or throw error
+        //  request file using default cipher -- decifer
+        // controller.displayFile(parsedIndex, null); -- use method from person D to get the file and decode
     }
 
     private void handleTwoArgs(String index, String keyFile) {
-        // TODO: validate index
-        // TODO: request file using alternate cipher
+        //  validate index - make sure index is a valid file associated or throw error
+        //  request file using alternate cipher 
         // controller.displayFile(parsedIndex, keyFile);
     }
 
@@ -51,7 +48,7 @@ public class TopSecretUI {
         System.out.println("java topsecret [num] [keyfile]");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { //this just runs the program
         ProgramController controller = new ProgramController();
         new TopSecretUI(controller).run(args);
     }
