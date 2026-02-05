@@ -1,0 +1,26 @@
+Task List:
+
+Team Member A (User Interface):
+- Design CLI interface
+- Validate command-line arguments
+- Write userinterface.txt
+- Write JUnit tests for CLI parsing
+
+Team Member B (File Handler):
+- Read files from data directory
+- List available files
+- Return file contents
+- Write filehandler.txt
+- Write FileHandler tests
+
+Team Member C (Program Control):
+- Connect UI to FileHandler
+- Route commands and return output
+- Write programcontrol.txt
+- Write ProgramControl tests
+
+Team Member D (Cipher):
+- Load and validate cipher key
+- Decipher text
+- Write cipher.txt
+- Write Cipher tests
