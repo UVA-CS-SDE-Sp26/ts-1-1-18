@@ -1,0 +1,22 @@
+Basic User Flow:
+
+1. Parse the command from the CLI to determine what file needs to be returned (or all files) (Ryan's part)
+2. Main part for file handler: Open that file and read its contents. Save to a string.
+3. Run decipher on the string (or on the file depending on Karina's implementation of the decipherer)
+4. Return the value outputted from decipher code.
+
+Tests (units):
+
+Case: No user provided file argument
+Expected output:
+Should return the list of files as specified in array list format.
+01 filea.txt
+02 fileb.txt
+03 filec.txt
+
+Case: User provided file argument
+Expected output:
+String containing deciphered text.
+
+Resources:
+1. https://www.w3schools.com/java/java_files_read.asp - Can help with syntax for reading files in Java
