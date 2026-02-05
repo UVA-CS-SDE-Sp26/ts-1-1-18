@@ -18,13 +18,22 @@ java topsecret 02 mycustonket.txt
 
 Command logic and rerouting
 - No arguments: triggers "list" command. UI will display the numbered index followed
-                by the file name
+                by the file name (handle no args)
 - One argument (index): UI validates that the index is a number and corresponds to one 
                           of the filenames. It then passes this index to program control to 
-                          display the file decoded with the normal key. 
+                          display the file decoded with the normal key. (handle one args)
 - Two arguments (index and key): UI validates the index and passes both the index and 
                                   path to the alternative key file to Program control to 
-                                  display the decoded message
+                                  display the decoded message (handle two args)
+run(args)
+    if length(args) == 0
+        handleNoArgs()
+    else if length(args) == 1
+        handleOneArg(args[0])
+    else if length(args) == 2
+        handleTwoArgs(args[0], args[1])
+    else
+        handleTooManyArgs()
 
 Error Handling
 - Non-numeric Index: UI displays "Error: '(inputted index)' is not a valid file number
