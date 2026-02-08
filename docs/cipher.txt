@@ -1,0 +1,145 @@
+HW 2
+Karina Kejriwal (Team Member D)
+2/13/25
+
+Purpose:
+
+    Implement the ciphering/deciphering feature for the TopSecret command-line tool.
+    - Load a substitution cipher key and alternate key path (optional)
+    - Validate the cipher key file format / content
+    - Decipher ciphered text (string input) into regular string output
+    - Allow Team Member C to call without touching files directly
+
+Pseudocode:
+
+    void loadKey(String keyPath) {
+
+        List<String> lines;
+
+        try {
+            lines = read all lines from keyPath;
+        } catch (Exception e) {
+             throw error
+        }
+
+        actual = lines.get(0);
+        cipher = lines.get(1);
+
+        validateKey(actual, cipher);
+
+        cipherMap = new empty map;
+
+        for (int i = 0 to i < cipher.length()) {
+            cipherMap.put(add actual.charAt(i) to cipher.charAt(i));
+        }
+    }
+
+   void validateKey(String actual, String cipher) {
+
+       if (actual is empty OR cipher is empty) {
+          throw error
+       }
+
+       if (actual.length() != cipher.length()) {
+           throw error
+       }
+
+       if (containsDuplicates(actual)) {
+           throw error
+       }
+
+       if (containsDuplicates(cipher)) {
+           throw error
+   }
+
+   boolean containsDuplicates(String input) {
+
+       Set<Character> seen = new empty set;
+
+       for (int i = 0 to input.length()) {
+           if (seen already contains input.charAt(i)) {
+               return true;
+           }
+           add seen to input.charAt(i);
+       }
+
+       return false;
+   }
+
+   String decipher(String cipherText) {
+
+       if (cipherText == null) {
+           return null;
+       }
+
+       StringBuilder output = new empty StringBuilder;
+
+       for (int i = 0 to cipherText.length()) {
+
+           char current = cipherText.charAt(i);
+
+           if (cipherMap contains key current) {
+               output.append(cipherMap.get(current));
+           } else {
+               output.append(current);
+           }
+       }
+
+       return output.toString();
+   }
+
+Tests:
+
+    Missing key file
+        Expect: constructor throws IllegalArgumentException with readable message
+
+    Wrong number of lines
+        Given: key file with only 1 line
+        Expect: throws IllegalArgumentException
+
+    Mismatched lengths
+        Expect: throws IllegalArgumentException
+
+    Duplicate characters in actual line
+        Expect: throws IllegalArgumentException
+
+    Duplicate characters in cipher line
+        Expect: throws IllegalArgumentException
+
+    Basic mapping
+        Given: actual = "abc", cipher = "xyz"
+        Input: "x y z"
+        Expect: "a b c" (spaces unchanged)
+
+    Leaves unmapped characters unchanged
+        Given key above
+        Input: "x!2"
+        Expect: "a!2"
+
+    Handles empty input
+        Input: ""
+        Expect: ""
+
+    Handles null input
+    Input: null
+    Expect: null
+
+
+UML:
+
+-----------------------------------------------------
+ Cipher
+-----------------------------------------------------
+- actual: String  |
+- cipher: String  |
+- map: Map<Character, Character> |
+-----------------------------------------------------
++ Cipher()
++ Cipher(keyPath: String)
++ decipher(input: String): String
+- validateKey(actual: String, cipher: String): void
+- hasDuplicates(s: String): boolean
+-----------------------------------------------------
+
+
+
