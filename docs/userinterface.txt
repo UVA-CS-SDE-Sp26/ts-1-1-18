@@ -35,7 +35,7 @@ run(args)
     else
         handleTooManyArgs()
 
-Error Handling
+Error Handling (will exit prgram if any of these occur)
 - Non-numeric Index: UI displays "Error: '(inputted index)' is not a valid file number
 - Out of Bounds Index: UI displays: " Error "File number __ not found."
 - Invalid Argument Count: If >2 arguments are entered, UI displays the Usage instructions 

@@ -1,12 +1,13 @@
 public class TopSecretUI {
 
     private ProgramController controller;
-    // this is from the member C
+
+
     public TopSecretUI(ProgramController controller) {
         this.controller = controller;
     }
 
-    //decides what program to run based on the amoutn of arguemtns
+    //from psuedocode
     public void run(String[] args) {
         if (args.length == 0) {
             handleNoArgs();
@@ -19,28 +20,38 @@ public class TopSecretUI {
         }
     }
 
+    //if there are no arguements list the files (run the program from the filehandler one but maybe needs to change)
     private void handleNoArgs() {
-        // request file list from ProgramControl -- member c
-        // controller.listFiles();
+        controller.listFiles();
     }
 
+    //this is for one argument if it is right display the file and if not throw an error
     private void handleOneArg(String index) {
-        //  validate index -- make sure index is a valid file associated or throw error
-        //  request file using default cipher -- decifer
-        // controller.displayFile(parsedIndex, null); -- use method from person D to get the file and decode
+        try {
+            int parsedIndex = Integer.parseInt(index);
+            controller.displayFile(parsedIndex, null);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: '" + index + "' is not a valid file number");
+        }
     }
 
+    //if two arguments validate the integer and find the key or throw error
     private void handleTwoArgs(String index, String keyFile) {
-        //  validate index - make sure index is a valid file associated or throw error
-        //  request file using alternate cipher
-        // controller.displayFile(parsedIndex, keyFile);
+        try {
+            int parsedIndex = Integer.parseInt(index);
+            controller.displayFile(parsedIndex, keyFile);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: '" + index + "' is not a valid file number");
+        }
     }
 
+   //if the user enters more than two arguments throw error
     private void handleTooManyArgs() {
         System.out.println("Error: Too many positional arguments.");
         printUsage();
     }
 
+    //instructions on how program works
     private void printUsage() {
         System.out.println("Usage:");
         System.out.println("java topsecret");
@@ -48,7 +59,8 @@ public class TopSecretUI {
         System.out.println("java topsecret [num] [keyfile]");
     }
 
-    public static void main(String[] args) { //this just runs the program
+
+    public static void main(String[] args) {
         ProgramController controller = new ProgramController();
         new TopSecretUI(controller).run(args);
     }
