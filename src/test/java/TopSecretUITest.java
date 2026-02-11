@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TopSecretUITest {
+class TopSecretTest {
 
     private ByteArrayOutputStream outContent;
     private PrintStream originalOut;
@@ -23,28 +23,28 @@ class TopSecretUITest {
 
     @Test
     void noArguments_doesNotThrowException() {
-        TopSecretUI ui = new TopSecretUI(new ProgramController());
+        TopSecret ui = new TopSecret(new ProgramController());
 
         assertDoesNotThrow(() -> ui.run(new String[]{}));
     }
 
     @Test
     void oneNumericArgument_doesNotThrowException() {
-        TopSecretUI ui = new TopSecretUI(new ProgramController());
+        TopSecret ui = new TopSecret(new ProgramController());
 
         assertDoesNotThrow(() -> ui.run(new String[]{"1"}));
     }
 
     @Test
     void twoArguments_doesNotThrowException() {
-        TopSecretUI ui = new TopSecretUI(new ProgramController());
+        TopSecret ui = new TopSecret(new ProgramController());
 
         assertDoesNotThrow(() -> ui.run(new String[]{"1", "key.txt"}));
     }
 
     @Test
     void nonNumericIndex_printsErrorMessage() {
-        TopSecretUI ui = new TopSecretUI(new ProgramController());
+        TopSecret ui = new TopSecret(new ProgramController());
 
         ui.run(new String[]{"abc"});
 
@@ -54,7 +54,7 @@ class TopSecretUITest {
 
     @Test
     void tooManyArguments_printsUsage() {
-        TopSecretUI ui = new TopSecretUI(new ProgramController());
+        TopSecret ui = new TopSecret(new ProgramController());
 
         ui.run(new String[]{"1", "key.txt", "extra"});
 
