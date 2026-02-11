@@ -4,8 +4,9 @@
 public class TopSecret {
 
     public static void main(String[] args) {
-        ProgramController controller = new ProgramController();
+        Cipher cipher = new Cipher();
+        FileHandler newFileHandler = new FileHandler(cipher, "data");
+        ProgramController controller = new ProgramController(newFileHandler);
         new TopSecretUI(controller).run(args);
     }
-
 }
