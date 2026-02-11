@@ -15,7 +15,6 @@ public class Cipher {
 
     public Cipher(String keyPath) {
         List<String> lines;
-
         //ensure key file exists and is readable
         try {
             lines = Files.readAllLines(Path.of(keyPath));

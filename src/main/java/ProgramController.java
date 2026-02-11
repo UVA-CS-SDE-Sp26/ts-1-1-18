@@ -1,46 +1,51 @@
 import java.io.*;
 import java.util.*;
+public class ProgramController{
+    public FileHandler fileHandler;
+    private String dataDirectory = "data";
 
-public class ProgramController {
-
+    public ProgramController(FileHandler fileHandler) {
+        Cipher cipher = new Cipher();
+        this.fileHandler = new FileHandler(cipher, dataDirectory);
+    }
     public void listFiles() {
-        //create a new file object called docs directing to the docs folder
-        File docs = new File("docs");
-        int i = 1;
-        for (final File fileEntry : docs.listFiles()) {
-            //print out the file number and the file name
-            System.out.println(i + " " + fileEntry.getName());
+        String files = fileHandler.listFiles();
+        String[] splitFiles = files.split("\n");
 
-            i++;
+        for (int i = 0; i < splitFiles.length; i++) {
+            System.out.printf("%02d %s\n", i + 1, splitFiles[i]);
         }
     }
 
-    public void displayFile(int index, String keyFile) {
-        //use the file handler to create a ist of files
-        List<String> files = fileHandler.listFiles();
+    public void displayFiles(String input, String keyFile) {
+        int index =0;
+        try {
+            index = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+          System.out.println("Please enter a number");
+        }
 
-        if (index < 1 || index > files.size()) {
-            //if the file number given is invalid say so
-            System.out.println("Invalid file number.");
+        String files = fileHandler.listFiles();
+        String[] splitFiles = files.split("\n");
+
+        if(index < 0 || index> splitFiles.length) {
+            System.out.println("Invalid index");
             return;
         }
+        String file = splitFiles[index -1];
 
-        String fileName = files.get(index - 1);
-        String contents = fileHandler.getFileContents(fileName);
-
-        Cipher cipher;
-
-        if (keyFile == null) {
-            //if there is no key provided use the cypher
-            cipher = new Cipher();
-        } else {
-            //otherwise you should be deciphering using the keyfile provided
-            cipher = new Cipher("ciphers/" + keyFile);
+        if(file != null){
+            Cipher cutomCipher = new Cipher(keyFile);
+            FileHandler customHandler = new FileHandler(cutomCipher, dataDirectory);
+            System.out.printf(customHandler.handleFile(file));
         }
-
-        String readable = cipher.decipher(contents);
-
-        System.out.println(readable);
+        else{
+            System.out.println(fileHandler.handleFile(file));
+        }
     }
+    public void handleTooManyArgs() {
+        System.out.println("Error: Too many positional arguments.");
+    }
+
 
 }
