@@ -3,6 +3,12 @@ what the user types, make sure the command is a valid one, tell the other parts 
 program what file to go to and print the final message on the screen, so it is back to the 
 user.
 
+What it does:
+• Read the user's command-line input
+• Validate that the command is valid
+• Route valid commands to ProgramController
+• Display the final output or error message to the user
+
 Usage instructions: If a user provides an invalid input or more than two arguments, the  
 program will display an error message (below) followed by instructions for how the program
 worked.
@@ -29,9 +35,9 @@ run(args)
     if length(args) == 0
         handleNoArgs()
     else if length(args) == 1
-        handleOneArg(args[0])
+        displayfiles(args[0])
     else if length(args) == 2
-        handleTwoArgs(args[0], args[1])
+        displayfiles(args[0], args[1])
     else
         handleTooManyArgs()
 
