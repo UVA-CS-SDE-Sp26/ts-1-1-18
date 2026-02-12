@@ -43,6 +43,21 @@ Unit tests designed and implemented (FileHandlerTest):
 - verifies deciphered output returned by FileHandler
 - verifies FileHandler calls Cipher.decipher(...) when reading a valid file
 
+4. handleFileReturnsNotFoundForMissingFile()
+- verifies a missing file path returns:
+File not found: missing-file.txt
+
+5. handleFileReturnsReadErrorWhenDecipherFails()
+- forces Cipher.decipher(...) to throw at runtime
+- verifies FileHandler returns:
+Could not read file: filea.txt
+
+6. constructorThrowsWhenDataDirectoryIsInvalid()
+- verifies FileHandler constructor throws NullPointerException when the configured data directory does not exist
+
+7. handleFileReturnsErrorWhenNullFileGiven()
+- verifies handleFile(null) throws NullPointerException
+
 TDD notes:
 1. Tests are focused on Team Member B responsibilities only.
 2. File access remains encapsulated inside FileHandler per assignment requirement.
