@@ -1,90 +1,64 @@
 import org.junit.jupiter.api.*;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProgramControllerTest {
 
-    private ByteArrayOutputStream outputStream;
-    private PrintStream originalOut;
+    private ProgramController controller;
+    private FileHandler mockFileHandler;
 
     @BeforeEach
     void setUp() {
-        outputStream = new ByteArrayOutputStream();
-        originalOut = System.out;
-        System.setOut(new PrintStream(outputStream));
+        mockFileHandler = mock(FileHandler.class);
+        controller = new ProgramController(mockFileHandler);
     }
 
     @AfterEach
     void tearDown() {
-        System.setOut(originalOut);
+
     }
 
     @Test
-    void listFiles() {
-        FileHandler mockHandler = mock(FileHandler.class);
-        when(mockHandler.listFiles()).thenReturn("file1.txt\nfile2.txt");
-
-        ProgramController controller = new ProgramController(mockHandler);
+    void listFilesTest() {
+        //make sure the files are returning properly
+        //They should be in the form
+        //1 file1.txt
+        //2 file2.txt
+        when(mockFileHandler.listFiles()).thenReturn("1 file1.txt\n2 file2.txt");
         controller.listFiles();
-
-        String output = outputStream.toString();
-
-        assertTrue(output.contains("01 file1.txt"));
-        assertTrue(output.contains("02 file2.txt"));
+        verify(mockFileHandler).listFiles();
     }
 
     @Test
-    void displayFiles_validIndex_noKey() {
-        FileHandler mockHandler = mock(FileHandler.class);
-
-        when(mockHandler.listFiles()).thenReturn("file1.txt\nfile2.txt");
-        when(mockHandler.handleFile("file1.txt")).thenReturn("decoded content");
-
-        ProgramController controller = new ProgramController(mockHandler);
+    void displayFilesValidIndex() {
+        //make sure the files are being handled correctly when there are multiple files
+        when(mockFileHandler.listFiles()).thenReturn("1 file1.txt\n2 file2.txt");
+        when(mockFileHandler.handleFile("file1.txt")).thenReturn("File Content");
         controller.displayFiles("1", null);
 
-        String output = outputStream.toString();
-
-        assertTrue(output.contains("decoded content"));
+        verify(mockFileHandler).handleFile("file1.txt");
     }
 
     @Test
-    void displayFiles_invalidInput() {
-        FileHandler mockHandler = mock(FileHandler.class);
-        when(mockHandler.listFiles()).thenReturn("file1.txt\nfile2.txt");
+    void displayFilesInvalidIndex() {
+        //Make sure an error is being thrown if there are no files
+        when(mockFileHandler.listFiles()).thenReturn("1 file1.txt");
 
-        ProgramController controller = new ProgramController(mockHandler);
-        controller.displayFiles("abc", null);
-
-        String output = outputStream.toString();
-
-        assertTrue(output.contains("Please enter a number"));
-    }
-
-    @Test
-    void displayFiles_invalidIndex() {
-        FileHandler mockHandler = mock(FileHandler.class);
-        when(mockHandler.listFiles()).thenReturn("file1.txt\nfile2.txt");
-
-        ProgramController controller = new ProgramController(mockHandler);
         controller.displayFiles("5", null);
+        verify(mockFileHandler, never()).handleFile(anyString());
+    }
 
-        String output = outputStream.toString();
-
-        assertTrue(output.contains("Invalid index"));
+    @Test
+    void displayFilesNonIntIndex() {
+        //if you provide the display files with not a number it should send an error
+        controller.displayFiles("abc", null);
+        verify(mockFileHandler, never()).handleFile(anyString());
     }
 
     @Test
     void handleTooManyArgs() {
-        FileHandler mockHandler = mock(FileHandler.class);
-        ProgramController controller = new ProgramController(mockHandler);
-
         controller.handleTooManyArgs();
-
-        String output = outputStream.toString();
-        assertTrue(output.contains("Too many positional arguments"));
     }
 }

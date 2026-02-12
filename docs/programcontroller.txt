@@ -1,0 +1,40 @@
+Program Controller Design (Team Member B):
+
+Purpose:
+The program controller was designed to take the arguments passed in by the user, and connect them
+to the file handler to produce an output that would decipher the desired files using the default key
+or the specified cipher.
+
+Methods:
+1. listFiles:
+    This is a very simple method that just used the listFiles method from the file handler and prints the
+    results
+
+2. displayFiles:
+    - This method is more complex and handles the one and two argument cases.
+    - It begins with a check of valid arguments, starting with whether or not the first is an int.
+    - It then takes in all the files from the listFiles method and splits them up into an array
+    - The method then checks if your index is valid
+    - The files are then split up between their number and their actual file name so the file handler can work with them
+    - Null check the file and the key
+    - If the key is not null the cipher will provide the file handled with the provided key
+    - If the key is null the file handler will default to the standard key
+    - The method will print out the file after it has been processed by the file handler.
+
+3. handleTooManyArgs:
+    - This simply tells the user if there are too many arguments and can be used by the user interface
+      if the arguments are greater than 2.
+
+UML Diagram
+-------------------
+ProgramController
+-------------------
+- fileHandler: FileHandler
+- dataDirectory: String
+-------------------
++ ProgramController(fileHandler: FileHandler)
++ listFiles(): void
++ displayFiles(input: String, keyFile: String): void
++ handleTooManyArgs(): void
+-------------------
+
