@@ -9,11 +9,7 @@ public class ProgramController{
     }
     public void listFiles() {
         String files = fileHandler.listFiles();
-        String[] splitFiles = files.split("\n");
-
-        for (int i = 0; i < splitFiles.length; i++) {
-            System.out.printf("%02d %s\n", i + 1, splitFiles[i]);
-        }
+        System.out.println(files);
     }
 
     public void displayFiles(String input, String keyFile) {
@@ -32,7 +28,10 @@ public class ProgramController{
             System.out.println("Invalid index");
             return;
         }
-        String file = splitFiles[index -1];
+        String fileWithNumber = splitFiles[index - 1];
+        String[] parts = fileWithNumber.split(" ", 2);
+        String file = parts[1];
+
 
         if (file != null) {
             if (keyFile != null) {
