@@ -5,10 +5,10 @@ public class TopSecretUITest {
 
     @Test
     public void testCommandLineLogic() {
-        // Pass null so we don't use any other parts of the project
+        // Pass null so we don't use any other parts of the project and only tests command line
         TopSecretUI ui = new TopSecretUI(null);
 
-        // Scenario 1: User runs 'java TopSecret'
+        // Scenario 1: User runs 'java TopSecret' no arguements
         ui.run(new String[]{});
         assertEquals(0, ui.a, "Should hit branch 0 for no arguments");
 
