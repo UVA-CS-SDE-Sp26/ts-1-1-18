@@ -1,22 +1,49 @@
-Basic User Flow:
+FileHandler Design (Team Member B)
 
-1. Parse the command from the CLI to determine what file needs to be returned (or all files) (Ryan's part)
-2. Main part for file handler: Open that file and read its contents. Save to a string.
-3. Run decipher on the string (or on the file depending on Karina's implementation of the decipherer)
-4. Return the value outputted from decipher code.
+Purpose:
+FileHandler is the only class that directly accesses mission files on disk.
+It owns file discovery, file reading, and returning content for other parts of the program.
 
-Tests (units):
+Scope and boundaries:
+1. Reads files from a configured data directory (for example: data/).
+2. Returns a numbered file list for "no-argument" CLI behavior.
+3. Reads a selected file and returns deciphered text using the provided Cipher dependency.
+4. Handles file access/read failures and returns clear error strings.
+5. Other classes (UI/controller) must not read files directly.
 
-Case: No user provided file argument
-Expected output:
-Should return the list of files as specified in array list format.
+Current behavior:
+1. Constructor loads available filenames from the data directory.
+2. Filenames are sorted so numbering is deterministic.
+3. listFiles() returns numbered lines:
+01 filea.txt
+02 fileb.txt
+03 filec.txt
+4. getAvailableFiles() returns the available filenames as a list for controller selection logic.
+5. handleFile(filename):
+- checks whether the requested path exists and is a regular file
+- reads file contents
+- calls Cipher.decipher(...)
+- returns deciphered text
+- if file does not exist: returns "File not found: <filename>"
+- if reading fails: returns "Could not read file: <filename>"
+
+Unit tests designed and implemented (FileHandlerTest):
+1. loadAvailableFiles()
+- verifies file list is loaded
+- verifies expected test files are present (filea.txt, fileb.txt, filec.txt)
+
+2. listFiles()
+- verifies exact numbered output format:
 01 filea.txt
 02 fileb.txt
 03 filec.txt
 
-Case: User provided file argument
-Expected output:
-String containing deciphered text.
+3. handleFile()
+- uses Mockito to mock Cipher
+- verifies deciphered output returned by FileHandler
+- verifies FileHandler calls Cipher.decipher(...) when reading a valid file
 
-Resources:
-1. https://www.w3schools.com/java/java_files_read.asp - Can help with syntax for reading files in Java
+TDD notes:
+1. Tests are focused on Team Member B responsibilities only.
+2. File access remains encapsulated inside FileHandler per assignment requirement.
+3. Controller/UI behavior is tested separately by other team responsibilities.

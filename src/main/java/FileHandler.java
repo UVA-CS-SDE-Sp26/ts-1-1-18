@@ -1,6 +1,5 @@
 import java.nio.file.*;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class FileHandler {
     private final Cipher cipher;
@@ -8,25 +7,38 @@ public class FileHandler {
     private List<String> files;
     private String dataDirectory;
 
+    // File handler constructor
     public FileHandler(Cipher cipher, String dataDirectory) {
         this.cipher = cipher;
         this.result = null;
         this.dataDirectory = dataDirectory;
         this.files = new ArrayList<>();
+
+        // We load all the files inside the constructor so that the files field is already populated
         loadAvailableFiles();
     }
 
     // Used to save files in data/ to this.files
     private void loadAvailableFiles() {
-        this.files = Arrays.asList(Objects.requireNonNull(Paths.get(dataDirectory).toFile().list()));
+        String[] discovered = Objects.requireNonNull(Paths.get(dataDirectory).toFile().list());
+        Arrays.sort(discovered);
+        this.files = Arrays.asList(discovered);
     }
 
     // In the case where a file name is not provided
     public String listFiles() {
-        return files.stream().map(file -> (file + "\n")).reduce("", String::concat);
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < files.size(); i++) {
+            out.append(String.format("%02d %s%n", i + 1, files.get(i)));
+        }
+        return out.toString();
     }
 
-    // In the case where a filename is provided
+    public List<String> getAvailableFiles() {
+        return new ArrayList<>(files);
+    }
+
+    // In the case where a file name is provided
     public String handleFile(String filename) {
         // Get the file path
         Path filePath = Paths.get(dataDirectory, filename);
@@ -38,10 +50,10 @@ public class FileHandler {
 
         try {
             String fileContentCiphered = Files.readString(filePath);
-            // Call the Cipher class decipher method to get back the deciphered text
+            // Call the cipher decipher method to get back the deciphered text
             result = cipher.decipher(fileContentCiphered);
             return result;
-        } catch (Exception e) { // If there's issues reading the file
+        } catch (Exception e) { // If there are issues reading the file
             return "Could not read file: " + filename;
         }
     }
