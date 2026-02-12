@@ -61,4 +61,32 @@ class FileHandlerTest {
         assertEquals("01 filea.txt\n02 fileb.txt\n03 filec.txt\n", result);
     }
 
+    @Test
+    void handleFileReturnsNotFoundForMissingFile() {
+        String result = fileHandler.handleFile("missing-file.txt");
+        assertEquals("File not found: missing-file.txt", result);
+    }
+
+    @Test
+    void handleFileReturnsReadErrorWhenDecipherFails() {
+        String filename = "filea.txt";
+        when(cipher.decipher(anyString())).thenThrow(new RuntimeException("decipher failed"));
+
+        String result = fileHandler.handleFile(filename);
+        assertEquals("Could not read file: " + filename, result);
+    }
+
+    @Test
+    void constructorThrowsWhenDataDirectoryIsInvalid() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new FileHandler(cipher, "src/test/resources/does-not-exist")
+        );
+    }
+
+    @Test
+    void handleFileReturnsErrorWhenNullFileGiven() {
+        assertThrows(NullPointerException.class, () -> fileHandler.handleFile(null));
+    }
+
 }
