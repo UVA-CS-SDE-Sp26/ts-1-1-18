@@ -5,8 +5,7 @@ public class ProgramController{
     private String dataDirectory = "data";
 
     public ProgramController(FileHandler fileHandler) {
-        Cipher cipher = new Cipher();
-        this.fileHandler = new FileHandler(cipher, dataDirectory);
+        this.fileHandler = fileHandler;
     }
     public void listFiles() {
         String files = fileHandler.listFiles();
@@ -22,7 +21,8 @@ public class ProgramController{
         try {
             index = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-          System.out.println("Please enter a number");
+            System.out.println("Please enter a number");
+            return;
         }
 
         String files = fileHandler.listFiles();
@@ -34,13 +34,14 @@ public class ProgramController{
         }
         String file = splitFiles[index -1];
 
-        if(file != null){
-            Cipher cutomCipher = new Cipher(keyFile);
-            FileHandler customHandler = new FileHandler(cutomCipher, dataDirectory);
-            System.out.printf(customHandler.handleFile(file));
-        }
-        else{
-            System.out.println(fileHandler.handleFile(file));
+        if (file != null) {
+            if (keyFile != null) {
+                Cipher customCipher = new Cipher(keyFile);
+                FileHandler customHandler = new FileHandler(customCipher, dataDirectory);
+                System.out.printf(customHandler.handleFile(file));
+            } else {
+                System.out.println(fileHandler.handleFile(file));
+            }
         }
     }
     public void handleTooManyArgs() {
