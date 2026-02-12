@@ -4,24 +4,42 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TopSecretUITest {
 
     @Test
-    public void testCommandLineLogic() {
-        // Pass null so we don't use any other parts of the project and only tests command line
+    public void testNoArguments() {
         TopSecretUI ui = new TopSecretUI(null);
 
-        // Scenario 1: User runs 'java TopSecret' no arguements
         ui.run(new String[]{});
         assertEquals(0, ui.a, "Should hit branch 0 for no arguments");
+    }
 
-        // Scenario 2: User runs 'java TopSecret 01'
+    @Test
+    public void testOneArgument() {
+        TopSecretUI ui = new TopSecretUI(null);
+
         ui.run(new String[]{"01"});
         assertEquals(1, ui.a, "Should hit branch 1 for one argument");
+    }
 
-        // Scenario 3: User runs 'java TopSecret 01 cipher.key'
+    @Test
+    public void testTwoArguments() {
+        TopSecretUI ui = new TopSecretUI(null);
+
         ui.run(new String[]{"01", "cipher.key"});
         assertEquals(2, ui.a, "Should hit branch 2 for two arguments");
+    }
 
-        // Scenario 4: User runs with too many arguments
+    @Test
+    public void testTooManyArguments() {
+        TopSecretUI ui = new TopSecretUI(null);
+
         ui.run(new String[]{"1", "2", "3"});
         assertEquals(3, ui.a, "Should hit branch 3 for too many arguments");
+    }
+
+    @Test
+    public void testMoreThanThreeArguments() {
+        TopSecretUI ui = new TopSecretUI(null);
+
+        ui.run(new String[]{"1", "2", "3", "4"});
+        assertEquals(3, ui.a, "Should still hit branch 3 for excessive arguments");
     }
 }
