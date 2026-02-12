@@ -1,0 +1,84 @@
+Homework 2
+
+The objective of Homework 2 is to get you started working with your team. You should work together to decompose the requirements below into a program. This assignment is small enough one person could likely do it on their own in a simple way; however, the intention is for you to think through how the work will be divided to allow cooperation among the team. As with homework 1, the end product is important, but how you complete it is the most important. The experience of discussing the problem such that each team member understands how it all works, and how they will contribute to it. Take your time and enjoy thinking this through!
+
+
+It is expected you take the first week to design the solution and tests, planning how the software will be modularized. Each developer must contribute the solution for their assigned tasks only. Remember: Good fences make good neighbors. Also, pay special attention to developing unit tests for this assignment. Graders will be taking a close look at Unit Tests in your project.
+Narrative
+Now that you are tooled up to work as a software engineer, Pat assigns you to a team and assigns a first project. A large library of mission data exists in a text file format. Your assignment is to create a command-line utility (means it runs in your command prompt/terminal) that will allow agents to view file contents. Pat explains the Agency uses a Test Driven Development (TDD) approach, which means tests should be written before the solution.
+
+For teams with four members, text files will be ciphered, and will need to be deciphered. For teams with three members, plain text files will be used. Two sample files are provided, along with a cipher key.
+
+A short example of what is intended by cipher is recorded in Panopto, on Canvas.
+
+The program should be run from the class TopSecret… e.g., using the command:
+ java topsecret
+
+When the program runs with no arguments, it should list the numbered files available to display. E.g.:
+
+01 filea.txt
+02 fileb.txt
+03 filec.txt
+
+When the program runs with a number as an argument, the contents of the corresponding file is displayed on screen.
+
+ java topsecret 01
+(this displays on screen the contents of the file filea.txt)
+The program exits after showing the file list, the contents of an indicated file, or after displaying an error message.
+
+In the absence of a second parameter, the program uses the default key for deciphering. However, a second parameter can be supplied that specifies an alternate key to use when deciphering. This option should be implemented even if the group has only three members.
+
+A short example of a command line interface tool is recorded in Panopto, on Canvas.
+
+The starter project in GitHub contains the required folder structure. You will be using Gradle, not IntelliJ, to manage the dependencies for this project.
+
+Objectives
+Team Member A: You are responsible for the command line interface used by the user to run the program. Create a file, userinterface.txt, in the docs folder to document the user interface. (the command prompt options)
+
+Team Member B: You are responsible for the part of the problem that reads data files. The program should expect files in a folder named data (in the same directory of the program, or in the root of your project folder.) When a request for a file is received, this part of the program will return the file contents. This part of the program should handle all the direct access to files. Document the plan your team makes for the design of your software in a text file named filehandler.txt.
+
+Team Member C: You are responsible for connecting the command line to the file handler, requesting file contents and returning readable text. When the program is executed with no arguments, this part of the program should provide a list of files available, as provided from the work of Team Member B, along with a corresponding number. Document the plan your team makes for testing in programcontrol.txt.
+
+Team Member D (For teams with four members): You are responsible for implementing the ciphering feature. This feature should accept a ciphered string and return it deciphered. The cipher will be stored in a file named key.txt, stored in a folder, ciphers, (in the same directory of the program, or in the root of your project folder.) This file will contain two lines, the first line is the actual letter, the second line is the cipher match. When the cipher is accessed, it must be validated. An example will be provided. Document this in cipher.txt.
+
+To create this program, you’ll first need to design how the software will work and how you will be able to cooperate as engineers… how will your contributions interconnect?
+
+First Week Tasks
+Discuss in your team how the system will work. Take notes!
+Create a task list.
+Draw a diagram to illustrate it. Don’t worry too much about doing the diagram ‘right’ at the moment, just make your own picture. You should be able to circle responsibilities for A, B, C and D. (D if the team has four members)
+Define how these parts interconnect.
+Connect to your team in GitHub, download the starter code for your project, and commit documentation and test designs.
+
+Second Week Tasks
+Further design tests and create them. (NOTE each engineer has their own tests.)
+Write code, run tests.
+TA review - software must download and run a testing script
+Team self-assessment. What will work better next time? Take notes.
+
+Midpoint Checklist
+Team formed… all members have joined the team in GitHub
+Documentation files created:
+Userinterface
+Filehandler
+Programcontrol
+Cipher
+Tests designed and documented
+Userinterface
+Filehandler
+Programcontrol
+Cipher
+Tasklist for Final Week written
+Complete your week 1 self assessment
+TA final deliverable checklist
+
+Does the program run?
+Does the program exit gracefully if a file cannot be found or deciphered?
+Have the assigned users completed and committed their assigned part?
+Userinterface works according to Pat’s requirements
+Files are not directly accessed outside of filehandler
+Deciphering works
+Are unit tests complete?
+Every class has tests
+Every method has at least one test - not strictly required for ‘boilerplate’ getter and setter methods
+Verify test quality
